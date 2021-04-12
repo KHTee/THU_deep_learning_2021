@@ -1,2 +1,8 @@
 # THU_deep_learning_2021
 Assignments for THU deep learning 2021
+
+
+1. Logistic regression
+2. Softmax classifier and MLP
+3. CNN
+4. CNN & MLP in Pytorch
