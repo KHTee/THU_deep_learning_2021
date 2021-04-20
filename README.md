@@ -6,3 +6,4 @@ Assignments for THU deep learning 2021
 2. Softmax classifier and MLP
 3. CNN
 4. CNN & MLP in Pytorch
+5. Sentence-level sentiment classification with Pytorch
