@@ -16,12 +16,11 @@ class DataLoad:
         preprocess_pipeline = data.Pipeline(lambda x: x.lower()
                                             if x.lower() in WORDS else "<unk>")
 
-        # set up fields
-        # self.TEXT = data.Field(batch_first=True,
-        #                        fix_length=self.sent_length,
-        #                        preprocessing=preprocess_pipeline,
-        #                        lower=True)
-        self.TEXT = data.Field(batch_first=True, fix_length=self.sent_length)
+        self.TEXT = data.Field(batch_first=True,
+                               fix_length=self.sent_length,
+                               preprocessing=preprocess_pipeline,
+                               lower=True)
+        # self.TEXT = data.Field(batch_first=True, fix_length=self.sent_length)
         self.LABEL = data.Field(sequential=False, dtype=torch.long)
 
         # make splits for data
@@ -29,9 +28,9 @@ class DataLoad:
         self.train, self.val, self.test = datasets.SST.splits(
             self.TEXT, self.LABEL, fine_grained=True, train_subtrees=False)
 
-        # self.train = self._remove_rubbish(self.train)
-        # self.val = self._remove_rubbish(self.val)
-        # self.test = self._remove_rubbish(self.test)
+        # self.train = self._remove_non_english_words(self.train)
+        # self.val = self._remove_non_english_words(self.val)
+        # self.test = self._remove_non_english_words(self.test)
 
         # build vocab
         self.TEXT.build_vocab(self.train, vectors=pretrained_vocab)
@@ -40,11 +39,7 @@ class DataLoad:
         self.train_iter, self.val_iter, self.test_iter = data.BucketIterator.splits(
             (self.train, self.val, self.test), batch_size=batch_size)
 
-        # self.train_iter.create_batches()
-        # self.val_iter.create_batches()
-        # self.test_iter.create_batches()
-
-    def _remove_rubbish(self, sentences):
+    def _remove_non_english_words(self, sentences):
         """Remove non English words and numeric"""
         WORDS = set(nltk.corpus.words.words())
 
