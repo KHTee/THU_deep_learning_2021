@@ -7,10 +7,7 @@ nltk.download("words")
 
 class DataLoad:
     """Download SST dataset and create dataloader using torchtext"""
-    def __init__(self,
-                 sent_length=20,
-                 pretrained_vocab="fasttext.en.300d",
-                 batch_size=64):
+    def __init__(self, sent_length=20, pretrained_vocab=None, batch_size=64):
         self.sent_length = sent_length
         WORDS = set(nltk.corpus.words.words())
         preprocess_pipeline = data.Pipeline(lambda x: x.lower()

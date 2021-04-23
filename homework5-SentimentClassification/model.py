@@ -37,9 +37,10 @@ class BaseModel(nn.Module):
 
         if self.pretrained_emb is not None:
             self.embedding.weight.data.copy_(self.pretrained_emb)
+            self.embedding.weight.requires_grad = False
         else:
-            init_weights()
-        self.embedding.weight.requires_grad = False
+            self.init_weights()
+            self.embedding.weight.requires_grad = True
 
         # Dropout layers
         self.dropout_train = nn.Dropout(self.dropout)
